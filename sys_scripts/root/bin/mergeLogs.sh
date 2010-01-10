@@ -1,13 +1,12 @@
 #!/bin/bash
 # Script to consolidate log files
-# Should be done in python. Not that leet yet.
 #
 # v1.0 - Ready For Primetime jbair@2009-06-28
 # v1.1 - Not quite - still making better.
 # v1.2 - Possibly ready to use
 # v2.0 - Written to be run by root for all 4
-#
-# Last updated 2009-07-13
+# v2.1 - Stable and now in github.
+# Last updated 2010-01-10
 
 # Our servers, should all be users in /home
 servers="srcds1 srcds2 srcds3 srcds4"
