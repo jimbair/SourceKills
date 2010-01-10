@@ -1,0 +1,8 @@
+#!/bin/bash
+echo 'You really should change this to work like editadmins.sh'
+echo 'Press enter to continue with your 4x VIM hack.'
+read lol
+for i in 1 2 3 4; do 
+	vim /home/srcds$i/css$i/cstrike/cfg/mani_admin_plugin/adverts.txt
+done
+exit 0

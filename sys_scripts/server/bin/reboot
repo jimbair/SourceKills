@@ -1,0 +1,94 @@
+#!/bin/bash
+# Re-written to be modular
+# jbair@2008-12-28
+# Updated 2009-01-10 - Fixed screens piling up
+# on complete lockup.
+# v1.1
+
+PATH=$PATH:/bin:/usr/bin
+
+cssdir=$(cd $HOME ; ls | grep css[0-9])
+cssnum=$(echo $cssdir | wc -l)
+
+log_message() {
+        echo "[`date`] - $@"
+}
+
+# Check our variables
+if [ -z "$cssdir" ]; then
+        log_message "ERROR: Cannot find our css directory. Exiting." >&2
+        exit 1
+elif [ "$cssnum" -gt 1 ]; then
+        log_message "ERROR: More than one css directory found. Exiting." >&2
+        exit 1
+fi
+
+# Make sure screen is installled
+screen --help > /dev/null 2>&1
+if [ $? -eq 127 ]; then
+	log_message "ERROR: Screen is not installed. Cannot continue."
+	exit 1
+fi	
+
+# Ensure our rebootstart script lives
+if [ ! -x ${HOME}/bin/rebootstart ]; then
+	log_message "ERROR: Cannot execute rebootstart. Exiting."
+	exit 1
+fi
+
+# Test to see if our screen is present.
+screen -p 0 -X -S $cssdir stuff "status" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+	# Do a full reboot if the screen is here.
+	log_message "Sending the following messages into our screen:"
+	log_message "Server reboot in 10 seconds, please rejoin!"
+	screen -p 0 -X -S $cssdir stuff "say Server reboot in 10 seconds, please rejoin!"
+	sleep 9
+	log_message "Executing writeid"
+	screen -p 0 -X -S $cssdir stuff "writeid"
+	sleep 1
+	log_message "Executing quit"
+	screen -p 0 -X -S $cssdir stuff "quit"
+	sleep 10
+	log_message "Sending ctrl+c"
+	screen -p 0 -X -S $cssdir stuff ""
+	sleep 1
+else
+	log_message "Cannot attach to existing screen. Skipping shutdown procedures."
+fi
+
+# Ensure screen is now gone
+screenNum="$(screen -list | grep $cssdir | wc -l)"
+if [ "$screenNum" -eq 1 ]; then
+	log_message "Screen still present. Attempting to kill."
+	pid="$(screen -list | grep $cssdir | cut -d '.' -f -1 | grep -v '[a-zA-Z]')"
+	if [ -n "$pid" ]; then
+		kill -9 $pid
+		if [ -z "$(screen -list | grep $cssdir)" ]; then
+			log_message "Screen killed successfully."
+		else
+			log_message "Unable to kill the screen. Exiting."
+			exit 1
+		fi
+	else
+		log_message "Unable to find pid. Exiting."
+		exit 1
+	fi
+elif [ "$screenNum" -gt 1 ]; then
+	# Should make this scale as well possibly.
+	log_message "Multiple screens founds. Exiting."
+	exit 1
+else
+	log_message "Screen killed successfully."
+fi
+
+# Start the gameserver
+log_message "Starting gameserver"
+screen -dmS $cssdir ${HOME}/bin/rebootstart
+sleep 10
+log_message "Executing writeid"
+screen -p 0 -X -S $cssdir stuff "writeid"
+
+# All done
+log_message "Reboot process has been completed"
+exit 0
