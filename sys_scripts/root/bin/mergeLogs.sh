@@ -51,18 +51,6 @@ for server in $servers; do
 	# Done for compatibility reasons
 	ourServer="$server"
 
-	# Save our merged files
-	backups="/root/merge/backups.${ourServer}/"
-	if [[ ! -d "$backups" ]]; then
-		mkdir "$backups"
-	fi
-
-	# files merged database
-	mergedFiles="/root/merge/merged.cfg.${ourServer}"
-	if [[ ! -f "$mergedFiles" ]]; then
-		touch "$mergedFiles"
-	fi
-
 	# Find the newest file and skip that so we don't 
 	# cause the gameserver to freak out. 
 	newestFile=$(ls -c L*.log | head -1)
@@ -96,13 +84,6 @@ for server in $servers; do
 				continue
 			fi
 			
-			# Check if we've done this before
-			checkMe=$(grep "$file" "$mergedFiles")
-			if [[ -n "$checkMe" ]]; then
-				echo "Skipping $file - already merged before."
-				continue
-			fi
-
 			# Create our file
 			if [[ ! -f $fullFile ]]; then
 				touch $fullFile
@@ -115,16 +96,9 @@ for server in $servers; do
 			echo "Merging $ourFile into logfile $fullFile"
 			cat $ourFile >> $fullFile
 
-			# Move the old file out of the current directory
-			# Still backing up our files, just in case.
+			# Remove the merged file
+            rm $ourFile
 			
-			# Remove this when you deploy!
-			mv $ourFile $backups
-			
-			# Let our db know we've been here
-			
-			# Remove this when you deploy!
-			echo $ourFile >> $mergedFiles
 		# What we do with empty files - Just delete them.
 		elif [[ -f "$file" ]]; then
 			echo "Empty file $file found - deleting."
