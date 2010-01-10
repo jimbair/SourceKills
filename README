@@ -1,3 +1,5 @@
+Until I get the time to set this in all headers, everything here is GPLv2 or higher as dictated in the COPYING file.
+
 This is a collection of scripts I personally use to manage my gaming community, SourceKills. It's a lot of random code that helps 'get things done', and if it can help anyone else along the way, cool.
 
 A lot of this is messy code, but still, no reason to hide it. To understand how this code works, the following needs understood:
@@ -8,6 +10,8 @@ root
 gameserver
 
 Each gameserver has it's own user to keep things clean. Therefore, all user scripts figure out who they are and run their commands accordingly (dynamically). Makes deploying new code easier, though it's mostly all BASH.
+
+Anything non-system related will be found in the plugins section.
 
 Fixes and suggestions are welcomed.
 
