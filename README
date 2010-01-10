@@ -13,7 +13,7 @@ Each gameserver has it's own user to keep things clean. Therefore, all user scri
 
 Anything non-system related will be found in the plugins section.
 
-Fixes and suggestions are welcomed.
+Fixes and suggestions are welcomed. I'd love to turn this into a deployable project, but for now, it's just version control and open sourcing the code I've had to hack up over the years.
 
 James Bair
 james.d.bair@gmail.com
