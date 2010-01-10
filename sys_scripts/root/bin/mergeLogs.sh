@@ -38,7 +38,7 @@ for server in $servers; do
     child="$(ls /home/$server/$root | egrep 'cstrike')"
     dest="/home/${server}/${root}/${child}/logs/"
 
-    if [ ! -d "$dest" ]; then
+    if [[ ! -d "$dest" ]]; then
         echo "The server ${server}'s logs are missing." >&2
         echo "Logs checked: $dest" >&2
         exit 1
