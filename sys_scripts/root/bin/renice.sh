@@ -15,10 +15,14 @@ if [ $UID -ne 0 ]; then
 fi
 
 # Find our pids
-pid=`pidof srcds_i686`
-renice -19 $pid
+pid=$(pidof srcds_linux)
+if [ -z "$pid" ]; then
+    echo "Unable to find our SourceDS pids." >&2
+    exit 1
+fi
 
 # Make sure we exited cleanly.
+renice -19 $pid
 if [ $? -eq 0 ]; then
 	echo 'SUCCESS! All SourceDS processes set to a nice of -19.'
 	exit 0

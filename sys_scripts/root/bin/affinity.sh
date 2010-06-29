@@ -1,28 +1,39 @@
 #!/bin/bash
-# Script to fix affinity of our SourceDS processes.
+# Script to set affinity of our SourceDS processes.
 
-# Finds the PID for the user's gameserver.
-# Pass it the username as $1
-findpid() {
-	if [ -n "$1" ] && [ -z "$2" ]; then
-		ps au | grep './srcds_i686' | grep $1 | grep -v grep | awk '{print $2}'
-	else
-		echo "findpid() was passed without proper args. Exiting."
-		exit 1
-	fi
-}
+# Find the number of procs we have
+procNum="$(egrep -c '^cpu family+[[:space:]]:' /proc/cpuinfo)"
+if [ $procNum -eq 0 ]; then
+    echo "Unable to find the number of processors." >&2
+    exit 1
+fi
 
-# Find our PIDs
-pid1=$(findpid srcds1)
-pid2=$(findpid srcds2)
-pid3=$(findpid srcds3)
-pid4=$(findpid srcds4)
+# Find our SourceDS processes, sort them by usernames, then pull out PIDs
+data="$(ps au | grep './srcds_linux' | grep srcds | grep -v grep | sort | awk '{print $2}')"
+if [ -z "$data" ]; then
+    echo "Unable to find our processes." >&2
+    exit 1
+fi
 
-# Fix our affinity
-taskset -cp 0 $pid1
-taskset -cp 1 $pid2
-taskset -cp 2 $pid3
-taskset -cp 3 $pid4
+# Make sure we don't have more pids than procs
+dataNum="$(echo $data | wc -l)"
+if [ $dataNum -gt $procNum ]; then
+    echo "We have $dataNum processes and only $procNum processors." >&2
+    exit 1
+fi
+
+# Start with affinity zero and go up.
+count=0
+
+for process in $data; do
+    taskset -cp $count $process
+    if [ $? -ne 0 ]; then
+        echo "Running 'taskset -cp $count $process' failed." >&2
+        exit 1
+    fi
+    # Increase our processor to go to
+    let count++
+done
 
 echo 'SUCCESS: All PIDs assigned to their correct affinity.'
 exit 0
