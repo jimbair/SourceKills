@@ -5,8 +5,11 @@
 # There is no portage to begin with. Let's install one.
 snapurl='http://mirrors.rit.edu/gentoo/snapshots/portage-latest.tar.bz2'
 md5url="${snapurl}.md5sum"
-snapshot="$(mktemp)"
-md5file="$(mktemp)"
+snapshot="$(basename ${snapurl})"
+md5file="$(basename ${md5url})"
+
+# Where to go back to
+back="$(pwd)"
 
 # Make sure our file isn't already here.
 if [ -s "${snapshot}" -o -s "${md5file}" ]; then
@@ -15,13 +18,15 @@ if [ -s "${snapshot}" -o -s "${md5file}" ]; then
 fi
 
 # Fetch our portage snapshot.
-wget ${snapurl} -O ${snapshot} || exit 1
-wget ${md5url} -O ${md5file} || exit 1
+cd /tmp
+wget ${snapurl} || exit 1
+wget ${md5url} || exit 1
 md5sum -c ${md5file} || exit 1
 
 # Extract and sync with the internet
 tar xvjf ${snapshot} -C /usr || exit 1
 rm -f ${snapurl} ${md5url}
+cd ${back}
 
 # Finally sync the live tree =)
 emerge --sync || exit 1
