@@ -1,0 +1,17 @@
+The numbering scheme on the modules is as follows.
+There are examples in ()'s of things to do during those stages.
+Modules are executed in numerical order from lowest to highest.
+
+000-099 - Basic, initial config file setup (setup make.conf)
+100-199 - OS Level Changes (update portage/packages)
+200-299 - Install additional applications
+300-399 - Setup users
+400-499 - Application Configuration (like apache)
+800-899 - Personal Preference Configuration (such as vim)
+900-999 - Cleanup (revdep rebuild, package rebuilds, distfile cleanup)
+
+All modules should check so that, if re-run, they don't do extra work, break things by double-configuring, etc.
+
+This is done so that this can be more modular for other purposes outside of SourceKills or myself. Also, maintaining modules is far easier than one huge script.
+
+-Jim
