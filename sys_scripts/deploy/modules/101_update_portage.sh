@@ -10,6 +10,7 @@ md5file="$(basename ${md5url})"
 
 # Where to go back to
 back="$(pwd)"
+cd /tmp
 
 # Make sure our file isn't already here.
 if [ -s "${snapshot}" -o -s "${md5file}" ]; then
@@ -18,7 +19,6 @@ if [ -s "${snapshot}" -o -s "${md5file}" ]; then
 fi
 
 # Fetch our portage snapshot.
-cd /tmp
 wget ${snapurl} || exit 1
 wget ${md5url} || exit 1
 md5sum -c ${md5file} || exit 1
