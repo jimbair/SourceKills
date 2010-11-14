@@ -2,6 +2,18 @@
 # Script to update a Gentoo 10.1 system from Slicehost 
 # up to the latest versions of packages.
 
+# Remove any blocking packages
+echo "Checking for any blocking packages."
+badOnes="$(emerge -pu portage 2>&1 | awk '$1 ~ /blocks/ {print $4}')"
+if [ -n "${badOnes}" ]; then
+    echo "Removing the following blocking packages: ${badOnes}"
+    for package in ${badOnes}; do
+        emerge --unmerge ${package} || exit 1
+    done
+else
+    echo "No blocking packages found."
+fi
+
 # Emerge portage FIRST
 echo "Proceeding with portage package update."
 emerge -u portage || exit 1
@@ -14,7 +26,6 @@ emerge -u gentoolkit
 # Now update everything!
 echo "Proceeding with updating entire OS."
 # First one can sometimes fail with lots of updates due to order
-clear
 emerge -uDN world || emerge -uDN world || exit 1
 
 # Required after perl upgrades. If not needed, doesn't hurt anything.
