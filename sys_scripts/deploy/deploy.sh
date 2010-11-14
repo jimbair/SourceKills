@@ -1,8 +1,8 @@
 #!/bin/bash
 # This is a script to quickly get Gentoo 10.1 64-bit 
 # up and running after deployment of a slice.
-# It then runs modules in order, numerically, and 
-# configures the system for use.
+# It runs the modules in order, numerically, and 
+# configures the system for use according to the modules.
 #
 # Designed for SourceKills and Slicehost
 
