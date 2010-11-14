@@ -25,7 +25,7 @@ md5sum -c ${md5file} || exit 1
 
 # Extract and sync with the internet
 tar xvjf ${snapshot} -C /usr || exit 1
-rm -f ${snapurl} ${md5url}
+rm -f ${snapshot} ${md5file}
 cd ${back}
 
 # Finally sync the live tree =)
