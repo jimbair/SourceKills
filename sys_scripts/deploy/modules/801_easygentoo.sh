@@ -23,6 +23,11 @@ cd ${targetDir} || exit 1
 echo "Installing our easygentoo files."
 for item in ${files}; do
     ourFile="$(basename ${item})"
+    # Check to see if it's already there.
+    if [ -s "${ourFile}" ]; then
+        echo "${ourFile} is already installed."
+        continue
+    fi
     echo "Installing ${ourFile}"
     wget ${wgetArgs} ${item} || exit 1
     chmod 750 ${ourFile} || exit 1
