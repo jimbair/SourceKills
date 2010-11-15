@@ -4,10 +4,14 @@
 # to make deployment cleaner. Also, kernel update utils aren't 
 # needed and gentooupdate.sh needs to be removed/deprecated.
 
+# Where we are/where we're going
 back="$(pwd)"
 targetDir='/usr/local/sbin/'
-files='https://github.com/tsuehpsyde/easygentoo/raw/master/etc-update-diff.sh \
-       https://github.com/tsuehpsyde/easygentoo/raw/master/gentooupdate.py'
+
+# Files we're going to install
+baseURL='https://github.com/tsuehpsyde/easygentoo/raw/master/'
+files="${baseURL}etc-update-diff.sh ${baseURL}gentooupdate.py"
+
 # Needed due to github's SSL cert
 wgetArgs='--no-check-certificate'
 
@@ -15,6 +19,7 @@ wgetArgs='--no-check-certificate'
 [ ! -d "${targetDir}" ] && mkdir ${targetDir}
 cd ${targetDir} || exit 1
 
+# Install our files
 echo "Installing our easygentoo files."
 for item in ${files}; do
     ourFile="$(basename ${item})"
@@ -24,5 +29,6 @@ for item in ${files}; do
     echo "Installed ${ourFile}"
 done
 
+# All done.
 cd ${back}
 exit 0
