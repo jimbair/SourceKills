@@ -1,7 +1,7 @@
 #!/bin/bash
 # Installs the following system packages. None of these 
 # should require any configuration.
-packages='ftp host iftop iptraf lsof netcat nmap rar rdiff-backup 
+packages='ftp host iftop iptraf ipython lsof netcat nmap rar rdiff-backup
           screen strace tcpdump telnet-bsd unrar unzip whois zip'
 
 # Install our packages if needed.
