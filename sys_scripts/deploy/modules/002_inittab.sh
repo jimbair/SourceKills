@@ -12,6 +12,7 @@ echo "Checking if ${ourFile} exists."
 
 # Patch our file as needed.
 for X in $(seq 2 6); do
+
     # Build the string we need to patch
     newString="$(echo ${ourString} | sed s/X/${X}/g)"
     [ -z "${newString}" ] && echo "Can't build our new string" && exit 1
