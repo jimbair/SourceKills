@@ -27,12 +27,20 @@ for int in ${interfaces}; do
     if [ ! -s "${dbFile}" ]; then
         echo "Configuring vnstat with ${int}"
         vnstat -u -i ${int} || exit 1
-        chown -R "${user}:${user}" /var/lib/vnstat || exit 1
         echo "Configured ${int} successfully."
     else
         echo "Skipping ${int} - already configured."
     fi
 done
+
+# Set the files to the correct permissions
+if [ -d "${vnstatDir}" ]; then
+    echo "Setting permissions on ${vnstatDir}"
+    chown -R "${user}:${user}" ${vnstatDir} || exit 1
+else
+    echo "Cannot find ${vnstatDir}."
+    exit 1
+fi
 
 # Start it up and set to startup
 if [ ! -s "${initScript}" -o ! -x "${initScript}" ]; then
