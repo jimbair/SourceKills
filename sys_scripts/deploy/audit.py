@@ -63,16 +63,30 @@ def main(logFile):
     for item in etcFiles:
         comWrapper('cat /etc/%s' % (item,), logFile)
 
+    # Find the users in the cron group
+    for line in file('/etc/group/', 'r').readlines():
+        if 'cron:x:' in line:
+            usersData = line.split(':')[-1]
+            users = usersData.split(',')
+            break
+
+    # Print out their crontab if applicable
+    for user in users:
+        comWrapper('crontab -l -u %s' % (user,),logFile)
+
     # Find our eselect modules and list their info
     esData = commands.getoutput('eselect modules list')
     esList = esData.split('\n')
     for line in esList:
-    
+        
+        # Empty lines or lines with : we don't want
         if ':' in line or line == '':
             continue
 
+        # Grab the first item on the line
         mod = line.split()[0]
 
+        # Exclude any bad mods
         if mod in badMods:
             continue
         
