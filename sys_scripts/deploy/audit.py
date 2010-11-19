@@ -66,6 +66,9 @@ def main(logFile):
     # Find the users in the cron group
     for line in file('/etc/group', 'r').readlines():
         if 'cron:x:' in line:
+            # Remove the newline, grab the users and 
+            # break them into an array.
+            line = line.strip()
             usersData = line.split(':')[-1]
             users = usersData.split(',')
             break
