@@ -64,7 +64,7 @@ def main(logFile):
         comWrapper('cat /etc/%s' % (item,), logFile)
 
     # Find the users in the cron group
-    for line in file('/etc/group/', 'r').readlines():
+    for line in file('/etc/group', 'r').readlines():
         if 'cron:x:' in line:
             usersData = line.split(':')[-1]
             users = usersData.split(',')
