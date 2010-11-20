@@ -4,10 +4,11 @@
 import commands
 import glob
 import os
+import socket
 import sys
 
 # Where we save out output to
-logFile = 'output.txt'
+logFile = '%s.output.txt' % (socket.gethostname(),)
 
 # The system commands we run
 ourCommands = ( 'w', 
@@ -26,7 +27,7 @@ etcFiles = ( 'fstab',
              'passwd' )
 
 # Modules to ignore from eselect
-badMods = ( 'help', 'usage', 'version', 'all', '')
+badMods = ( 'help', 'usage', 'version', 'all', '' )
 
 def log(input, logFile):
     """
