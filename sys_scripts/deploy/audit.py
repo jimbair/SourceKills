@@ -18,13 +18,15 @@ ourCommands = ( 'w',
                 'free -m',
                 'mount', 
                 'uname -a', 
-                'rc-update -s' )
+                'rc-update -s',
+                'ifconfig -a' )
 
 # File we read from /etc/
 etcFiles = ( 'fstab',
              'group',
              'make.conf',
-             'passwd' )
+             'passwd',
+             'conf.d/net' )
 
 # Modules to ignore from eselect
 badMods = ( 'help', 'usage', 'version', 'all', '' )
