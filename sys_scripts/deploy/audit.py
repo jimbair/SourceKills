@@ -122,6 +122,9 @@ def main(logFile):
 
 # Main
 if __name__ == '__main__':
+    if os.getuid() != 0:
+        sys.stderr.write('Must be run as root.\n')
+        sys.exit(1)
     if not os.path.isfile(logFile):
         main(logFile)
         sys.exit(0)
