@@ -12,14 +12,15 @@ logFile = '%s.output.txt' % (socket.gethostname(),)
 
 # The system commands we run
 ourCommands = ( 'w', 
-                'emerge --info', 
-                'emerge -ep world', 
-                'df -h', 
-                'free -m',
-                'mount', 
                 'uname -a', 
+                'free -m',
+                'df -h', 
+                'fdisk -l',
+                'mount -l',
+                'ifconfig -a'
                 'rc-update -s',
-                'ifconfig -a' )
+                'emerge --info', 
+                'emerge -ep world' )
 
 # File we read from /etc/
 etcFiles = ( 'fstab',
