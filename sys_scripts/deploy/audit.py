@@ -17,7 +17,7 @@ ourCommands = ( 'w',
                 'df -h', 
                 'fdisk -l',
                 'mount -l',
-                'ifconfig -a'
+                'ifconfig -a',
                 'rc-update -s',
                 'emerge --info', 
                 'emerge -ep world' )
@@ -30,7 +30,7 @@ etcFiles = ( 'fstab',
              'conf.d/net' )
 
 # Files we read from /proc/
-procFiles = ( 'cpuinfo' )
+procFiles = ( 'cpuinfo', )
 
 # Modules to ignore from eselect
 badMods = ( 'help', 'usage', 'version', 'all', '' )
