@@ -22,12 +22,15 @@ ourCommands = ( 'w',
                 'emerge --info', 
                 'emerge -ep world' )
 
-# File we read from /etc/
+# Files we read from /etc/
 etcFiles = ( 'fstab',
              'group',
              'make.conf',
              'passwd',
              'conf.d/net' )
+
+# Files we read from /proc/
+procFiles = ( 'cpuinfo' )
 
 # Modules to ignore from eselect
 badMods = ( 'help', 'usage', 'version', 'all', '' )
@@ -67,6 +70,10 @@ def main(logFile):
     # but I want the output wrapper the same as with commands.
     for item in etcFiles:
         comWrapper('cat /etc/%s' % (item,), logFile)
+
+    # do the same thing for stuff in /proc/
+    for item in procFiles:
+        comWrapper('cat /proc/%s' % (item,), logFile)
 
     # Find the users in the cron group
     for line in file('/etc/group', 'r').readlines():
