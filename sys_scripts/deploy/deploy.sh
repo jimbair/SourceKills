@@ -18,6 +18,7 @@ ourMods="$(ls ${modules}*${modExt} | sort)"
 # Make sure we are root and in Gentoo
 if [ "${UID}" -ne 0 ]; then
     echo "This script must be run as root." >&2
+    exit 1
 elif [ ! -s '/etc/gentoo-release' ]; then
     echo "This is not a Gentoo system." >&2
     exit 1
@@ -30,6 +31,16 @@ elif [ ! -d "${modules}" -o -z "${ourMods}" ]; then
     echo "No modules found to source!" >&2
     exit 1
 fi
+
+# Begin questions
+while [ -z "${sshPort}" ]; do
+    read -p "What port would you like SSH to run on: " sshPort
+    # Remove our value if it's not a number
+    sshPort="$(echo "${sshPort}" | sed '/[^0-9]/d')"
+done
+
+# Pass our question data over to the modules
+export sshPort
 
 # Start
 echo "Deployment started at $(date)."
