@@ -25,7 +25,7 @@ if [ "${portType}" == 'dead' ]; then
     echo "Port ${sshPort}" >> ${ourFile}
 elif [ "${portType}" == 'live' -a "${sshPort}" != ${livePort} ]; then
     sed -i "s/Port ${livePort}/Port ${sshPort}/g"
-elif [ "${portType}" == 'live' -a "${sshPort}" != ${livePort} ]; then
+elif [ "${portType}" == 'live' -a "${sshPort}" == ${livePort} ]; then
     echo "sshd already configured to port ${livePort}."
 else
     echo "Something broke with our port configuration." >&2
