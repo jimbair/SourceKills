@@ -3,10 +3,11 @@
 
 service(){
     
-    initFolder='/etc/init.d/'
-    initScript="${initFolder}${service}"
     service=$1
     option=$2
+    
+    initFolder='/etc/init.d/'
+    initScript="${initFolder}${service}"
 
     # Make sure the script is there and we can execute it.
     if [ ! -s "${initScript}" -o ! -x "${initScript}" ]; then
