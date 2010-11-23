@@ -1,9 +1,6 @@
 -Fix vimrc mod8le
 -Setup a file to add users either interactively or at deploy start-up for full unattended setup
 -Setup the following application install modules:
-  denyhosts
   fail2ban
-  logrotate (if needed?)
   ntp
   sysstat
--Setup script to interactively ask for certain things at startup, then export the values (like SSH port, users to add, etc.)
