@@ -6,6 +6,9 @@
 #
 # Designed for SourceKills and Slicehost
 
+PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+export PATH
+
 # Arch vars
 arch='x86_64'
 systemArch="$(uname -m)"
