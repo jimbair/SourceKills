@@ -14,9 +14,14 @@ arch='x86_64'
 systemArch="$(uname -m)"
 
 # Module vars
-modules="$(dirname $0)/modules/"
+modDir="$(dirname $0)/modules/"
 modExt='.sh'
-ourMods="$(ls ${modules}*${modExt} | sort)"
+ourMods="$(ls ${modDir}*${modExt} | sort)"
+
+# Library vars
+libDir="$(dirname $0)/libs/"
+libExt="${modExt}"
+ourLibs="$(ls ${libDir}*${libExt} | sort)"
 
 # Make sure we are root and in Gentoo
 if [ "${UID}" -ne 0 ]; then
@@ -30,8 +35,12 @@ elif [ "${systemArch}" != "${arch}" ]; then
     echo "This is supposed to be an ${arch} platform." >&2
     exit 1
 # Make sure we have some modules
-elif [ ! -d "${modules}" -o -z "${ourMods}" ]; then
+elif [ ! -d "${modDir}" -o -z "${ourMods}" ]; then
     echo "No modules found to source!" >&2
+    exit 1
+# Make sure we have libraries too
+elif [ ! -d "${libDir}" -o -z "${ourLibs}" ]; then
+    echo "No libraries found to source!" >&2
     exit 1
 fi
 
@@ -47,6 +56,9 @@ export sshPort
 
 # Start
 echo "Deployment started at $(date)."
+
+# Import our libraries
+source "${libDir}*"
 
 # Start running each module
 # Exit on any failures.

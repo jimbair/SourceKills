@@ -6,7 +6,6 @@ interfaces='eth0'
 
 # Stuff that should stay constant in Gentoo. Change if needed.
 dname='vnstatd'
-initScript="/etc/init.d/${dname}"
 runlevel='default'
 user='vnstat'
 vnstatDir='/var/lib/vnstat'
@@ -42,19 +41,8 @@ else
     exit 1
 fi
 
-# Start it up and set to startup
-if [ ! -s "${initScript}" -o ! -x "${initScript}" ]; then
-    echo "Init script is empty or not executable."
-    exit 1
-fi
-
-# Find our status and start if needed
-ourStatus="$(${initScript} status | awk '{print $NF}')"
-if [ "${ourStatus}" != 'started' ]; then
-    ${initScript} start || exit 1
-else
-    echo "${dname} is already running."
-fi
+# Start our service if needed.
+serviceStart ${dname}
 
 # Find our runlevel and add if needed
 currentRunlevel="$(rc-update -s | grep "${dname}" | awk '{print $NF}')"

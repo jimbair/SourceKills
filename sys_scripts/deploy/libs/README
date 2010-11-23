@@ -1,0 +1,13 @@
+All of the files in this folder are library modules. If you find yourself doing
+the same this across more than one module, you should probably make a function
+that goes in here and can be used globally.
+
+Rules:
+
+- Only functions allowed! Nothing else!
+- Each library file must have a '.sh' extension.
+- Each library file must export it's function.
+- Only one function per library file.
+
+The last rule is because troubleshooting a ton of BASH functions is no fun.
+Breaking a single function is much easier to diagnose/fix. Trust me. =)
