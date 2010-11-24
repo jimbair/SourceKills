@@ -4,7 +4,7 @@
 # Pretty sure this is specific to our Xen slices
 
 ourFile='/etc/inittab'
-string='cX:12345:respawn:/sbin/agetty 38400 ttyX linux'
+ourString='cX:12345:respawn:/sbin/agetty 38400 ttyX linux'
 
 # Make sure our file exists
 echo "Checking if ${ourFile} exists."
