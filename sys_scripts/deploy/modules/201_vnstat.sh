@@ -14,9 +14,11 @@ vnstatDir='/var/lib/vnstat'
 emerge -u vnstat || exit 1
 
 # Make sure our vnstat user exists
+echo -n "Verifying user and group..."
 for file in passwd group; do
     grep "${user}" "/etc/${file}" &>/dev/null || exit 1
 done
+echo 'done.'
 
 # Setup our interfaces if needed.
 for int in ${interfaces}; do 
