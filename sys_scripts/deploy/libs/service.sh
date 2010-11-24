@@ -19,4 +19,4 @@ service(){
     ${initScript} ${option}
 }
 
-export service
+export -f service

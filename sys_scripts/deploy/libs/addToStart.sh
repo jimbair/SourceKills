@@ -16,4 +16,4 @@ addToStart() {
 
 }
 
-export addToStart
+export -f addToStart

@@ -12,4 +12,4 @@ serviceStart() {
     fi
 }
 
-export serviceStart
+export -f serviceStart

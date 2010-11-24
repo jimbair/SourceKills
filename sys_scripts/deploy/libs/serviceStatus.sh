@@ -16,4 +16,4 @@ serviceStatus() {
     exit 0
 }
 
-export serviceStatus
+export -f serviceStatus
