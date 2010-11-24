@@ -58,7 +58,11 @@ export sshPort
 echo "Deployment started at $(date)."
 
 # Import our libraries
-source "${libDir}*"
+for lib in ${ourLibs}; do
+    echo -n "Sourcing ${lib}..."
+    source "${lib}" || exit 1
+    echo 'done.'
+done
 
 # Start running each module
 # Exit on any failures.
