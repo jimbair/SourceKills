@@ -7,6 +7,7 @@ snapurl='http://mirrors.rit.edu/gentoo/snapshots/portage-latest.tar.bz2'
 md5url="${snapurl}.md5sum"
 snapshot="$(basename ${snapurl})"
 md5file="$(basename ${md5url})"
+timestamp='/usr/portage/metadata/timestamp.chk'
 
 # Where to go back to
 back="$(pwd)"
@@ -18,14 +19,20 @@ if [ -s "${snapshot}" -o -s "${md5file}" ]; then
     exit 1
 fi
 
-# Fetch our portage snapshot.
-wget ${snapurl} || exit 1
-wget ${md5url} || exit 1
-md5sum -c ${md5file} || exit 1
+# If no portage installed, install a snapshot
+if [ ! -s "${timestamp}" ]; then
+    # Fetch our portage snapshot.
+    wget ${snapurl} || exit 1
+    wget ${md5url} || exit 1
+    md5sum -c ${md5file} || exit 1
 
-# Extract and sync with the internet
-tar xvjf ${snapshot} -C /usr || exit 1
-rm -f ${snapshot} ${md5file}
+    # Extract and sync with the internet
+    tar xvjf ${snapshot} -C /usr || exit 1
+    rm -f ${snapshot} ${md5file}
+else
+    echo "Portage already installed - skipping to sync."
+fi
+
 cd ${back}
 
 # Finally sync the live tree =)
