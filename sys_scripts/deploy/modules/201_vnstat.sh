@@ -6,6 +6,7 @@ interfaces='eth0'
 
 # Stuff that should stay constant in Gentoo. Change if needed.
 dname='vnstatd'
+configured='false'
 runlevel='default'
 user='vnstat'
 vnstatDir='/var/lib/vnstat'
@@ -28,6 +29,7 @@ for int in ${interfaces}; do
     if [ ! -s "${dbFile}" ]; then
         echo "Configuring vnstat with ${int}"
         vnstat -u -i ${int} || exit 1
+	configured='true'
         echo "Configured ${int} successfully."
     else
         echo "Skipping ${int} - already configured."
@@ -35,12 +37,14 @@ for int in ${interfaces}; do
 done
 
 # Set the files to the correct permissions
-if [ -d "${vnstatDir}" ]; then
-    echo "Setting permissions on ${vnstatDir}"
-    chown -R "${user}:${user}" ${vnstatDir} || exit 1
-else
-    echo "Cannot find ${vnstatDir}."
-    exit 1
+if [ "${configured}" == 'true' ]; then
+    if [ -d "${vnstatDir}" ]; then
+        echo "Setting permissions on ${vnstatDir}"
+        chown -R "${user}:${user}" ${vnstatDir} || exit 1
+    else
+        echo "Cannot find ${vnstatDir}."
+        exit 1
+    fi
 fi
 
 # Start our service if needed.
