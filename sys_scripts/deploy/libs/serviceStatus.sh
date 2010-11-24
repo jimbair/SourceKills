@@ -13,7 +13,6 @@ serviceStatus() {
 
     # All done
     echo "${status}"
-    exit 0
 }
 
 export -f serviceStatus

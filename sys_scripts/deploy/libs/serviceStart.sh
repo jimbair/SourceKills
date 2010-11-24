@@ -8,7 +8,6 @@ serviceStart() {
         service ${service} start || exit 1
     else
         echo "Service '${service}' already started - skipping."
-        exit 0
     fi
 }
 
