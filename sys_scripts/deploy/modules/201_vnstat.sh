@@ -44,14 +44,8 @@ fi
 # Start our service if needed.
 serviceStart ${dname}
 
-# Find our runlevel and add if needed
-currentRunlevel="$(rc-update -s | grep "${dname}" | awk '{print $NF}')"
-if [ "${currentRunlevel}" != "${runlevel}" ]; then
-    echo "Setting runlevel for ${dname} to ${runlevel}."
-    rc-update add ${dname} ${runlevel} || exit 1
-else
-    echo "Runlevel for ${dname} already set to ${currentRunlevel}."
-fi
+# Add to startup
+addToStart ${dname}
 
 # All done.
 exit 0
