@@ -4,8 +4,8 @@ This is designed specifically for use by SourceKills with Slicehost.
 
 To use it, run the following as root on a brand new, freshly installed Gentoo slice:
 
-wget --no-check-certificate https://github.com/tsuehpsyde/SourceKills/tarball/master
-tar xzvf tsuehpsyde-SourceKills*.tar.gz
+wget --no-check-certificate -O deploy.tar.gz https://github.com/tsuehpsyde/SourceKills/tarball/master
+tar xzvf deploy.tar.gz
 bash tsuehpsyde-SourceKills*/sys_scripts/deploy/deploy.sh
 
 The goal is to keep this modular enough that each step is broken down, and hopefully, this can be expanded to work with regular servers as well.
