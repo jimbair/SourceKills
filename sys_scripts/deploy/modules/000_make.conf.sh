@@ -6,7 +6,7 @@ ourFile='/etc/make.conf'
 
 # Make sure we have a file
 if [ ! -s "${ourFile}" ]; then
-    echo "Cannot find ${ourFile}."
+    echo "${ourFile} is missing." >&2
     exit 1
 fi
 
