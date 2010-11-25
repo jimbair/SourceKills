@@ -1,22 +1,29 @@
 #!/bin/bash
-# Patch make.conf with any changes we need.
+# Patch${ourFile} with any changes we need.
 rsyncMirror='rsync://mirrors.rit.edu/gentoo-portage'
 httpMirror='http://mirrors.rit.edu/gentoo/'
+ourFile='/etc/make.conf'
+
+# Make sure we have a file
+if [ ! -s "${ourFile}" ]; then
+    echo "Cannot find ${ourFile}."
+    exit 1
+fi
 
 # Add rsync mirror
-if [ -z "$(egrep '^SYNC=' /etc/make.conf)" ]; then
-    echo "Adding our rsync server to make.conf"
+if [ -z "$(egrep '^SYNC=' ${ourFile})" ]; then
+    echo "Adding our rsync server to ${ourFile}"
     echo "SYNC='${rsyncMirror}'" >> /etc/make.conf
 else
-    echo "Skipping SYNC value in make.conf - already exists."
+    echo "Skipping SYNC value in ${ourFile} - already exists."
 fi
 
 # Add http mirror
-if [ -z "$(egrep '^GENTOO_MIRRORS=' /etc/make.conf)" ]; then
-    echo "Adding our http server to make.conf"
+if [ -z "$(egrep '^GENTOO_MIRRORS=' ${ourFile})" ]; then
+    echo "Adding our http server to ${ourFile}"
     echo "GENTOO_MIRRORS='${httpMirror}'" >> /etc/make.conf
 else
-    echo "Skipping GENTOO_MIRROR value in make.conf - already exists."
+    echo "Skipping GENTOO_MIRROR value in ${ourFile} - already exists."
 fi
 
 # All done
