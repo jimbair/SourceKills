@@ -7,7 +7,7 @@ removeFromStart() {
 
     # Find our runlevel and add if needed
     currentRunlevel="$(rc-update -s | egrep "^[[:space:]]*${service}" | awk '{print $NF}')"
-    if [ -n "${currentRunlevel}" ]; then
+    if [ "${currentRunlevel}" == "${runlevel}" ]; then
         echo "Removing ${service} service from ${runlevel} runlevel."
         rc-update del ${service} ${runlevel} || exit 1
     else

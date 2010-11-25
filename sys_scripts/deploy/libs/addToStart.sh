@@ -8,10 +8,10 @@ addToStart() {
     # Find our runlevel and add if needed
     currentRunlevel="$(rc-update -s | egrep "^[[:space:]]*${service}" | awk '{print $NF}')"
     if [ "${currentRunlevel}" != "${runlevel}" ]; then
-        echo "Setting runlevel for ${service} to ${runlevel}."
+        echo "Adding ${service} service to ${runlevel} runlevel."
         rc-update add ${service} ${runlevel} || exit 1
     else
-        echo "Runlevel for ${service} already set to ${currentRunlevel}."
+        echo "Service ${service} already set to ${currentRunlevel} runlevel."
     fi
 
 }
