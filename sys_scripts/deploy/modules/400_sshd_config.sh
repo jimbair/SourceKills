@@ -1,7 +1,7 @@
 #!/bin/bash
 # This module tweaks the sshd config to our needs.
 ourFile='/etc/ssh/sshd_config'
-checkForFile ${ourFile}
+checkForFile ${ourFile} || exit 1
 
 # If we don't have an SSH port, set it to the default
 [ -z "${sshPort}" ] && sshPort=22

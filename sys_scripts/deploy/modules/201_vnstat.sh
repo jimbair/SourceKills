@@ -48,10 +48,10 @@ if [ "${configured}" == 'true' ]; then
 fi
 
 # Start our service if needed.
-serviceStart ${dname}
+serviceStart ${dname} || exit 1
 
 # Add to startup
-addToStart ${dname}
+addToStart ${dname} || exit 1
 
 # All done.
 exit 0
