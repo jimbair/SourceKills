@@ -43,7 +43,6 @@ fi
 # Clean up work
 revdep-rebuild || exit 1
 makewhatis -u || exit 1
-etc-update
 echo "Finished updating entire OS."
 
 # All done
