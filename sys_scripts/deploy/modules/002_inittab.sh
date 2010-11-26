@@ -19,7 +19,7 @@ for X in $(seq 2 6); do
 
     # Make sure it needs patched
     echo "Checking if we need to patch ${ourFile}."
-    egrep "^${newString}$" ${ourFile} || continue
+    egrep "^${newString}$" ${ourFile} &>/dev/null || continue
 
     # Patch it if we're still here
     echo -n "Patching..."
