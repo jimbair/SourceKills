@@ -5,10 +5,7 @@ httpMirror='http://mirrors.rit.edu/gentoo/'
 ourFile='/etc/make.conf'
 
 # Make sure we have a file
-if [ ! -s "${ourFile}" ]; then
-    echo "${ourFile} is missing." >&2
-    exit 1
-fi
+checkForFile ${ourFIle}
 
 # Add rsync mirror
 if [ -z "$(egrep '^SYNC=' ${ourFile})" ]; then

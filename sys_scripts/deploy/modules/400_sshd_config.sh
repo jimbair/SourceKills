@@ -1,10 +1,7 @@
 #!/bin/bash
 # This module tweaks the sshd config to our needs.
 ourFile='/etc/ssh/sshd_config'
-if [ ! -s "${ourFile}" ]; then
-    echo "Our file ${ourFile} is missing." >&2
-    exit 1
-fi
+checkForFile ${ourFile}
 
 # If we don't have an SSH port, set it to the default
 [ -z "${sshPort}" ] && sshPort=22

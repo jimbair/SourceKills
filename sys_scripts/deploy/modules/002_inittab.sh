@@ -7,8 +7,7 @@ ourFile='/etc/inittab'
 ourString='cX:12345:respawn:/sbin/agetty 38400 ttyX linux'
 
 # Make sure our file exists
-echo "Checking if ${ourFile} exists."
-[ -s "${ourFile}" ] || exit 1
+checkForFile ${ourFile}
 
 # Patch our file as needed.
 for X in $(seq 2 6); do
