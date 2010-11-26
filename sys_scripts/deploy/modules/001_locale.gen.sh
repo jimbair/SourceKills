@@ -12,7 +12,7 @@ fi
 for string in "${string1}" "${string2}"; do
     if [ -n "$(egrep "^#${string}" "${ourFile}")" ]; then
         echo -n "Patching for ${string}..."
-        sed -i "s/#${string}/${string}/" ${ourFile}
+        sed -i "s/#${string}/${string}/" ${ourFile} || exit 1
         echo "done."
     else
         echo "Skipping ${string} - already patched."
