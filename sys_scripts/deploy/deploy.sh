@@ -9,6 +9,8 @@
 PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 export PATH
 
+debug='false'
+
 # Arch vars
 arch='x86_64'
 systemArch="$(uname -m)"
@@ -22,6 +24,22 @@ ourMods="$(ls ${modDir}*${modExt} | sort)"
 libDir="$(dirname $0)/libs/"
 libExt="${modExt}"
 ourLibs="$(ls ${libDir}*${libExt} | sort)"
+
+usage() {
+
+    echo "usage: $(basename $0) [OPTION]"
+    echo ""
+    echo "Available Options:"
+    echo "debug - enter debug mode."
+    echo "help - print this help message"
+
+}
+
+debugPause() {
+
+    [ "$debug" == 'true' ] && read foo
+
+}
 
 # Make sure we are root and in Gentoo
 if [ "${UID}" -ne 0 ]; then
@@ -42,6 +60,24 @@ elif [ ! -d "${modDir}" -o -z "${ourMods}" ]; then
 elif [ ! -d "${libDir}" -o -z "${ourLibs}" ]; then
     echo "No libraries found to source!" >&2
     exit 1
+elif [ $# -gt 1 ]; then
+    usage >&2
+    exit 1
+fi
+
+# If we have an option, do something with it
+if [ $# -eq 1 ]; then
+    if [ "$1" == 'debug' ]; then
+        echo "Debug mode enabled."
+        debug='true'
+    elif [ "$1" == 'help' ]; then
+        usage
+        exit 0
+    else
+        echo "Unrecognized option '${1}'" >&2
+        usage >&2
+        exit 1
+    fi
 fi
 
 # Begin questions
@@ -64,6 +100,8 @@ for lib in ${ourLibs}; do
     echo 'done.'
 done
 
+debugPause
+
 # Start running each module
 # Exit on any failures.
 for i in ${ourMods}; do
@@ -72,6 +110,7 @@ for i in ${ourMods}; do
     bash ${i}
     if [ $? -eq 0 ]; then
         echo -e "\n${mod} completed successfully!\n"
+        debugPause
         continue
     else
         echo "${mod} failed. Please investigate." >&2
