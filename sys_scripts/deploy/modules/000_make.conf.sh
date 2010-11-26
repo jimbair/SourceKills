@@ -5,7 +5,7 @@ httpMirror='http://mirrors.rit.edu/gentoo/'
 ourFile='/etc/make.conf'
 
 # Make sure we have a file
-checkForFile ${ourFIle}
+checkForFile ${ourFile} || exit 1
 
 # Add rsync mirror
 if [ -z "$(egrep '^SYNC=' ${ourFile})" ]; then
