@@ -28,8 +28,9 @@ echo "Proceeding with updating entire OS."
 # First one can sometimes fail with lots of updates due to order
 emerge -uDN world || emerge -uDN world || exit 1
 
-# Required after perl upgrades. If not needed, doesn't hurt anything.
-perl-cleaner --all
+# Required after upgrades. If not needed, doesn't hurt anything.
+perl-cleaner --all || exit 1
+python-updater || exit 1
 
 # Now check for packages missed by portage
 missed="$(emerge -ep world | grep 'ebuild     U' | awk '{print $4}')"
