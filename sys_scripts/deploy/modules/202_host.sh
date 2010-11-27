@@ -17,9 +17,11 @@ echo -n "Creating our symlink..."
 cd "${ourFolder}" || exit 1
 if [ ! -e host ]; then
     ln -s hostx host || exit 1
+    echo 'done.'
+else
+    echo 'skipped.'
 fi
 cd ${back} || exit 1
-echo 'done.'
 
 # Make sure symlink works
 echo -n "Validating symlink..."
