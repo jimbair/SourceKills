@@ -6,7 +6,7 @@ back="$(pwd)"
 # Install our package if needed.
 emerge -u host || exit 1
 
-ourFolder="$(dirname $(which host))"
+ourFolder="$(dirname $(which hostx))"
 if [ -z "${ourFolder}" ]; then
     echo "Cannot find folder for host." >&2
     exit 1
