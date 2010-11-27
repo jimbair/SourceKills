@@ -22,6 +22,7 @@ echo "Finished updating portage."
 
 # Python should have been updated as part of portage
 echo "Checking if we need to run python-updater."
+emerge -u python-updater
 pyVer2="$(python --version 2>&1)"
 if [ "${pyVer}" != "${pyVer2}" ]; then
     echo "Python updated from ${pyVer} to ${pyVer2} - running."
