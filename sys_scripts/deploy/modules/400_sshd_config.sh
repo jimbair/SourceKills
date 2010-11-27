@@ -20,7 +20,7 @@ echo "Patching our sshd config."
 if [ "$(grep "#PermitRootLogin yes" "${ourFile}" )" ]; then
     echo "Patching PermitRootLogin"
     sed -i "s/#PermitRootLogin yes/PermitRootLogin without-password/" "${ourFile}"
-    update='true'
+    updated='true'
 else
     echo "PermitRootLogin already patched - skipping."
 fi
