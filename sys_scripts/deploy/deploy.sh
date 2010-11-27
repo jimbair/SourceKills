@@ -37,7 +37,7 @@ usage() {
 
 debugPause() {
 
-    [ "$debug" == 'true' ] && read foo
+    [ "$debug" == 'true' ] && read -p "Press enter to continue."
 
 }
 
