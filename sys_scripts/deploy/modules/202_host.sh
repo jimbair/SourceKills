@@ -15,7 +15,9 @@ fi
 # Setup the symlink if needed
 echo -n "Creating our symlink..."
 cd "${ourFolder}" || exit 1
-[ ! -e host ] && ln -s hostx host || exit 1
+if [ ! -e host ]; then
+    ln -s hostx host || exit 1
+fi
 cd ${back} || exit 1
 echo 'done.'
 
