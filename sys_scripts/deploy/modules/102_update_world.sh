@@ -17,24 +17,8 @@ fi
 # Emerge portage FIRST
 pyVer="$(python --version 2>&1)"
 echo "Proceeding with portage package update."
-emerge -uDN portage || exit 1
+emerge -u portage || exit 1
 echo "Finished updating portage."
-
-# Get Python 3 as well
-echo "Updating Python."
-emerge -uDN python
-echo "Finished updating Python."
-
-# Python should have been updated as part of portage
-echo "Checking if we need to run python-updater."
-emerge -u python-updater
-pyVer2="$(python --version 2>&1)"
-if [ "${pyVer}" != "${pyVer2}" ]; then
-    echo "Python updated from ${pyVer} to ${pyVer2} - running."
-    python-updater || exit 1
-else
-    echo "Python has not updated from ${pyVer} - skipping."
-fi
 
 # Emerge gentoolkit if we need it
 echo "Installing Gentoolkit if needed."
@@ -47,6 +31,17 @@ emerge -uDN world || emerge -uDN world || exit 1
 
 # Required after upgrades. If not needed, doesn't hurt anything.
 perl-cleaner --all || exit 1
+
+# Python should have been updated as part of portage
+echo "Checking if we need to run python-updater."
+pyVer2="$(python --version 2>&1)"
+if [ "${pyVer}" != "${pyVer2}" ]; then
+    echo "Python updated from ${pyVer} to ${pyVer2} - running."
+    python-updater || exit 1
+else
+    echo "Python has not updated from ${pyVer} - skipping."
+fi
+
 
 # Now check for packages missed by portage
 missed="$(emerge -ep world | grep 'ebuild     U' | awk '{print $4}')"
