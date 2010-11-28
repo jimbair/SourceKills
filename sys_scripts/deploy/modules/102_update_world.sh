@@ -59,7 +59,11 @@ fi
 
 # Clean up work
 revdep-rebuild || exit 1
+
+echo -n "Running 'makewhatis -u'..."
 makewhatis -u || exit 1
+echo 'done.'
+
 echo "Finished updating entire OS."
 
 # All done
