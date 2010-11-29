@@ -27,6 +27,7 @@ emerge -u gentoolkit
 # See Gentoo Bug #347081 http://bugs.gentoo.org/show_bug.cgi?id=347081i
 py3="$(which python3 2>/dev/null)"
 if [ -z "${py3}" ]; then
+    emerge -u python
     echo -n "Generating our python3 symlink..."
     eselectOrig="$(eselect python list | grep '*' | cut -d '[' -f 2 | cut -d ']' -f 1)"
     eselectPy3="$(eselect python list | grep 'python3.1' | cut -d '[' -f 2 | cut -d ']' -f 1)"
