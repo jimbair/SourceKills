@@ -56,23 +56,6 @@ emerge -uDN world || emerge -uDN world || exit 1
 python-updater || exit 1
 perl-cleaner --all || exit 1
 
-# Python should have been updated as part of portage
-echo "Checking if we need to run python-updater."
-pyVer2="$(python --version 2>&1)"
-if [ "${pyVer}" != "${pyVer2}" ]; then
-    echo "Python updated from ${pyVer} to ${pyVer2} - running."
-    # Need to swap Python version via eselect to build needed symlink
-    # See Gentoo Bug #347081 http://bugs.gentoo.org/show_bug.cgi?id=347081
-    eselectOrig="$(eselect python list | grep '*' | cut -d '[' -f 2 | cut -d ']' -f 1)"
-    eselectPy3="$(eselect python list | grep 'python3.1' | cut -d '[' -f 2 | cut -d ']' -f 1)"
-    eselect python set ${eselectPy} || exit 1
-    eselect python set ${eselectOrig} || exit 1
-    python-updater || exit 1
-else
-    echo "Python has not updated from ${pyVer} - skipping."
-fi
-
-
 # Now check for packages missed by portage
 missed="$(emerge -ep world | grep 'ebuild     U' | awk '{print $4}')"
 if [ -n "${missed}" ]; then
