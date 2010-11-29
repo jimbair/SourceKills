@@ -31,7 +31,7 @@ if [ -z "${py3}" ]; then
     echo -n "Generating our python3 symlink..."
     eselectOrig="$(eselect python list | grep '*' | cut -d '[' -f 2 | cut -d ']' -f 1)"
     eselectPy3="$(eselect python list | grep 'python3.1' | cut -d '[' -f 2 | cut -d ']' -f 1)"
-    eselect python set ${eselectPy} || exit 1
+    eselect python set ${eselectPy3} || exit 1
     eselect python set ${eselectOrig} || exit 1
     echo 'done.'
 else
