@@ -9,30 +9,30 @@ if [ $procNum -eq 0 ]; then
 fi
 
 # Find our SourceDS processes, sort them by usernames, then pull out PIDs
-data="$(ps au | grep './srcds_linux' | grep srcds | grep -v grep | sort | awk '{print $2}')"
-if [ -z "$data" ]; then
+pids="$(pidof srcds_linux)"
+if [ -z "$pids" ]; then
     echo "Unable to find our processes." >&2
     exit 1
 fi
 
 # Make sure we don't have more pids than procs
-dataNum="$(echo $data | wc -l)"
-if [ $dataNum -gt $procNum ]; then
+pidsNum="$(echo $data | wc -w)"
+if [ $pidsNum -gt $procNum ]; then
     echo "We have $dataNum processes and only $procNum processors." >&2
     exit 1
 fi
 
-# Start with affinity zero and go up.
-count=0
+# Start with highest affinity and go down
+count="$((${procNum}-1))"
 
-for process in $data; do
-    taskset -cp $count $process
+for pid in $pids; do
+    sudo taskset -cp $count $pid
     if [ $? -ne 0 ]; then
-        echo "Running 'taskset -cp $count $process' failed." >&2
+        echo "Running 'taskset -cp $count $pid' failed." >&2
         exit 1
     fi
-    # Increase our processor to go to
-    let count++
+    # Go to the next processor down
+    let count--
 done
 
 echo 'SUCCESS: All PIDs assigned to their correct affinity.'
