@@ -22,7 +22,7 @@ if [ -z "$pid" ]; then
 fi
 
 # Make sure we exited cleanly.
-renice -19 $pid
+sudo renice -19 $pid
 if [ $? -eq 0 ]; then
 	echo 'SUCCESS! All SourceDS processes set to a nice of -19.'
 	exit 0
