@@ -1,0 +1,8 @@
+The scripts in this directory are used in conjunction with the CloudKick service found at http://www.CloudKick.com/
+
+You simply install these files into the following folder and make them executable by root:
+/usr/lib/cloudkick-agent/plugins/
+
+You then add a "Custom Plugin" check and off you go!
+
+-Jim
