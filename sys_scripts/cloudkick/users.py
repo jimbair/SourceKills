@@ -13,7 +13,12 @@ def getUsersLoggedIn():
     """
     
     # Best way I can find to find users logged in
-    userData = commands.getoutput('who').strip()
+    commStatus, userData = commands.getstatusoutput('who')
+
+    # Make sure it exits gracefully
+    if commStatus != 0:
+        sys.stderr.write('status err Unable to execute "who" command.\n')
+        sys.exit(1)
     
     # "who" returns an empty string if no one is logged in
     if userData == '':
@@ -42,8 +47,8 @@ if __name__ == '__main__':
         sys.stdout.write("status ok No users logged in.\n")
         sys.exit(0)
     else:
-        sys.stderr.write("status err %d users logged in:" % (len(users),))
+        sys.stdout.write("status warn %d users logged in:" % (len(users),))
         for user in users:
-            sys.stderr.write(" %s" % (user,))
-        sys.stderr.write('\n')
-        sys.exit(1)
+            sys.stdout.write(" %s" % (user,))
+        sys.stdout.write('\n')
+        sys.exit(0)
