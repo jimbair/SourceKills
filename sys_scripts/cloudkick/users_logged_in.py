@@ -71,7 +71,7 @@ if __name__ == '__main__':
         else:
             userWord = 'users'
         # Build our string and report the warning
-        sys.stdout.write("status warn %d %s logged in:" % (userNum, userWord)
+        sys.stdout.write("status warn %d %s logged in:" % (userNum, userWord))
         for user in users:
             sys.stdout.write(" %s" % (user,))
         sys.stdout.write('\n')
