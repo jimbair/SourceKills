@@ -40,14 +40,21 @@ if __name__ == '__main__':
     # Find our users
     users = getUsersLoggedIn()
 
-    # Currently only supports zero or anything else.
+    # Currently only supports zero or anything else
     # Should be easy to add support for X number of 
-    # users to be okay, but >X alerting.
+    # users to be okay, but >X alerting
     if users is None:
         sys.stdout.write("status ok No users logged in.\n")
         sys.exit(0)
     else:
-        sys.stdout.write("status warn %d users logged in:" % (len(users),))
+        # Find out if it's "user" or "users"
+        userNum = len(users)
+        if userNum == 1:
+            userWord = 'user'
+        else:
+            userWord = 'users'
+        # Build our string and report the warning
+        sys.stdout.write("status warn %d %s logged in:" % (userNum, userWord)
         for user in users:
             sys.stdout.write(" %s" % (user,))
         sys.stdout.write('\n')
