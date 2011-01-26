@@ -75,6 +75,6 @@ if __name__ == '__main__':
         sys.stdout.write("status warn %d %s logged in:" % (userNum, userWord))
         sys.stdout.write(", " . join(users)[:48])
         sys.stdout.write('\n')
-        sys.stdout.write("metric users_logged_in int %d" % (userNum))
+        sys.stdout.write("metric users_logged_in int %d" % (userNum,))
         sys.stdout.write('\n')
         sys.exit(0)
