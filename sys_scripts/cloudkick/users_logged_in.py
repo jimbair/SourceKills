@@ -72,7 +72,7 @@ if __name__ == '__main__':
         else:
             userWord = 'users'
         # Build our string and report the warning
-        sys.stdout.write("status warn %d %s logged in:" % (userNum, userWord))
+        sys.stdout.write("status warn %d %s logged in: " % (userNum, userWord))
         sys.stdout.write(", " . join(users)[:48])
         sys.stdout.write('\n')
         sys.stdout.write("metric users_logged_in int %d" % (userNum,))
