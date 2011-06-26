@@ -17,6 +17,6 @@ if [ -n "${ourPIDs}" ]; then
     done
     exit 0
 else
-    echo "status err No SourceDS instances found."
-    exit 1
+    echo "status warn No SourceDS instances found."
+    exit 0
 fi
